@@ -3,7 +3,7 @@ import { FC, HTMLAttributes } from "react";
 import Text from "../Text/Text.component";
 import { SpinIcon, StyledButton } from "./styles";
 
-interface ButtonProps extends ButtonStyleProps {
+export interface ButtonProps extends ButtonStyleProps {
     label: string;
 }
 

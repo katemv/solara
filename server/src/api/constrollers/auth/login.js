@@ -6,8 +6,6 @@ const { JWTSecret } = require("../../../util/config");
 
 const login = async (req, res, next) => {
     let loadedUser;
-    console.log("req.body.email", req.body.email);
-    console.log("req.body.password", req.body.password);
     User.findOne({ email: req.body.email })
         .then((user) => {
             if (!user) {
@@ -17,7 +15,6 @@ const login = async (req, res, next) => {
             }
 
             loadedUser = user;
-            console.log("user",user);
 
             return bcrypt.compare(req.body.password, user.password);
         })
@@ -35,9 +32,6 @@ const login = async (req, res, next) => {
                 },
                 JWTSecret,
                 { expiresIn: "1h" });
-
-            console.log("token",token);
-
 
             res.status(200).json({ token, userId: loadedUser._id.toString() });
         })

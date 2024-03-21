@@ -6,7 +6,7 @@ import { ButtonStyleProps } from "./Button.component";
 export const StyledButton = styled.button<ButtonStyleProps>(
     ({ theme, fullWidth, disabled, loading, type }) => css`
         height: 50px;
-        background: ${theme.colors.purple80};
+        background-color: ${theme.colors.purple80};
         width: ${fullWidth ? "100%" : "auto"};
         border-radius: 10px;
         padding: 0 20px;
@@ -14,10 +14,11 @@ export const StyledButton = styled.button<ButtonStyleProps>(
         align-items: center;
         justify-content: center;
         gap: ${theme.spacings.spacing2};
+        transition: background-color 0.1s ease-in-out;
 
         &:hover,
         &:active {
-            background: ${theme.colors.purple100};
+            background-color: ${theme.colors.purple100};
         }
 
         &:hover {
@@ -31,19 +32,19 @@ export const StyledButton = styled.button<ButtonStyleProps>(
             background: ${theme.colors.purple80};
             
             &:hover, &:active {
-                background: ${theme.colors.purple80};
+                background-color: ${theme.colors.purple80};
                 cursor: default;
             }
         `}
         
         ${type === "ghost" &&
         `
-            background: transparent;
+            background-color: transparent;
             border: 2px solid ${theme.colors.black90};
             
             &:hover,
             &:active {
-                background: transparent;
+                background-color: transparent;
                 border-color: ${theme.colors.purple80};
             }
         `}

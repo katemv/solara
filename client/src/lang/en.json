@@ -36,6 +36,10 @@
             "admin": "Go to admin",
             "back_to_shop": "Back to shop",
             "login": "Log in"
+        },
+        "product_details": {
+            "product_details": "Product details",
+            "unit_price": "Unit price"
         }
     },
     "messages": {

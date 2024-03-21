@@ -1,10 +1,10 @@
 import { FC } from "react";
 
+import DoubleButton from "../../../Molecules/DoubleButton/DoubleButton.component";
 import Modal, { ModalProps } from "../../../Molecules/Modal/Modal.component";
 import { convertPrice } from "../../../../utils/convertPrice";
-import Button from "../../../Atoms/Button/Button.component";
 import { Flex } from "../../../Atoms/Flex/Flex.component";
-import image1 from "../../../../assets/images/astro.png";
+import image from "../../../../assets/images/astro.png";
 import { IProduct, Nullable } from "../../../../types";
 import Text from "../../../Atoms/Text/Text.component";
 import { Image } from "./styles";
@@ -18,20 +18,27 @@ const ProductDetailsModal: FC<ProductDetailsModalProps> = ({ visible, onClose, p
         <Modal visible={visible} onClose={onClose} maxWidth={450}>
             {product && (
                 <Flex direction="column" gap="spacing2">
-                    <Image src={image1} alt={product.name} />
+                    <Image src={image} alt={product.name} />
                     <Text
                         as="p"
                         plainText={product.brand}
                         appearance="headline6"
-                        color="grey60"
                         textTransform="uppercase"
                         fontWeight={300}
                         textAlign="left"
+                        color="grey60"
                     />
                     <Text
                         as="h3"
                         plainText="LuminaryDust - Galactic Gleam Highlighter"
-                        appearance="headline4"
+                        marginBottom="spacing4"
+                        appearance="headline2"
+                        textAlign="left"
+                    />
+                    <Text
+                        as="h3"
+                        intlKey="components.product_details.product_details"
+                        appearance="headline5"
                         textAlign="left"
                     />
                     <Text
@@ -44,10 +51,28 @@ const ProductDetailsModal: FC<ProductDetailsModalProps> = ({ visible, onClose, p
                         textAlign="left"
                         fontWeight={300}
                         color="grey60"
-                        marginBottom="spacing4"
+                        marginBottom="spacing5"
                     />
-                    <Text as="p" plainText={convertPrice(product.price)} textAlign="left" />
-                    <Button label="messages.buy_now" />
+                    <DoubleButton
+                        label="messages.buy_now"
+                        leftContent={
+                            <Flex direction="column">
+                                <Text
+                                    as="span"
+                                    plainText={convertPrice(product.price)}
+                                    textAlign="left"
+                                    appearance="headline4"
+                                />
+                                <Text
+                                    as="span"
+                                    intlKey="components.product_details.unit_price"
+                                    textAlign="left"
+                                    appearance="small"
+                                    fontWeight={300}
+                                />
+                            </Flex>
+                        }
+                    />
                 </Flex>
             )}
         </Modal>

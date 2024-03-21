@@ -38,5 +38,24 @@ export const ModalContainer = styled.div<Omit<ModalProps, "onClose">>(
         box-shadow: ${theme.shadows.elevation2};
         border-radius: 20px;
         padding: ${theme.spacings.spacing5};
+        overflow: auto;
+
+        &::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background-color: ${theme.colors.dark};
+            border-radius: 5px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: ${theme.colors.dark90};
+            border-radius: 5px;
+        }
+
+        &::-webkit-scrollbar-thumb:hover {
+            background-color: ${theme.colors.black90};
+        }
     `
 );

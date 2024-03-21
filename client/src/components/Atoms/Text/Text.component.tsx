@@ -17,10 +17,11 @@ export interface TextStyleProps {
     appearance: TypographyKeys;
     color: ColorsKeys;
     textAlign: "left" | "right" | "center";
-    fontWeight: number;
+    textWrap: "balance" | "pretty" | "unset";
     textTransform: "uppercase" | "none";
     marginBottom: SpacingKeys | 0;
     style: Record<string, any>;
+    fontWeight: number;
 }
 
 const Text: FC<TextProps> = ({
@@ -31,6 +32,7 @@ const Text: FC<TextProps> = ({
     appearance = "paragraph",
     color = "white",
     textAlign = "center",
+    textWrap = "balance",
     textTransform = "none",
     marginBottom = 0,
     customStyles = {},
@@ -47,6 +49,7 @@ const Text: FC<TextProps> = ({
             $textTransform={textTransform}
             $marginBottom={marginBottom}
             $textAlign={textAlign}
+            $textWrap={textWrap}
         >
             {intlKey ? formatMessage({ id: intlKey }) : plainText}
         </StyledText>
