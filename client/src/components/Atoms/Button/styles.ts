@@ -1,13 +1,18 @@
 import styled, { css } from "styled-components";
 
 import Icon from "../Icon/Icon.component";
-import { ButtonStyleProps } from "./Button.component";
+
+interface ButtonStyleProps {
+    $fullWidth: boolean;
+    $loading: boolean;
+    $appearance: "primary" | "secondary";
+}
 
 export const StyledButton = styled.button<ButtonStyleProps>(
-    ({ theme, fullWidth, disabled, loading, appearance }) => css`
+    ({ theme, $fullWidth, disabled, $loading, $appearance }) => css`
         height: 50px;
         background-color: ${theme.colors.purple80};
-        width: ${fullWidth ? "100%" : "auto"};
+        width: ${$fullWidth ? "100%" : "auto"};
         border-radius: 10px;
         padding: 0 20px;
         display: flex;
@@ -25,7 +30,7 @@ export const StyledButton = styled.button<ButtonStyleProps>(
             cursor: pointer;
         }
 
-        ${loading && `
+        ${$loading && `
             background: ${theme.colors.purple80};
 
             &:hover, &:active {
@@ -43,7 +48,7 @@ export const StyledButton = styled.button<ButtonStyleProps>(
             }
         `}
 
-        ${appearance === "secondary" && `
+        ${$appearance === "secondary" && `
             background: transparent;
             border: 2px solid ${theme.colors.dark90};
             transition: border-color 0.2s ease-in-out;

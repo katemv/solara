@@ -3,13 +3,13 @@ import { ColorsKeys } from "../../../providers/theme/types/types";
 
 interface StyledIconProps {
     color: ColorsKeys;
-    filled: boolean;
+    $filled: boolean;
     size: number;
 }
 
-export const StyledIcon = styled.span<StyledIconProps>(({ theme, color, filled, size }) => css`
+export const StyledIcon = styled.span<StyledIconProps>(({ theme, color, $filled, size }) => css`
     font-variation-settings:
-        "FILL" ${filled ? 1 : 0},
+        "FILL" ${$filled ? 1 : 0},
         "wght" 400,
         "GRAD" 0,
         "opsz" ${size};

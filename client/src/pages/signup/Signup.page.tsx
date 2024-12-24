@@ -58,13 +58,11 @@ const SignupPage = () => {
                         as="h1"
                         intlKey="pages.signup.signup"
                         appearance="headline2"
-                        textAlign="left"
                     />
                     <Text
                         as="p"
                         intlKey="pages.signup.signup_message"
                         color="dark80"
-                        textAlign="left"
                     />
                 </Flex>
 

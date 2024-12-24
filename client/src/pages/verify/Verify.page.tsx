@@ -15,13 +15,11 @@ const VerifyPage = () => {
                         as="h1"
                         intlKey="pages.verify.verification_code"
                         appearance="headline3"
-                        textAlign="left"
                     />
                     <Text
                         as="p"
                         intlKey="pages.verify.verification_code_subtitle"
                         color="dark80"
-                        textAlign="left"
                     />
                 </Flex>
                 <Flex gap="spacing3">

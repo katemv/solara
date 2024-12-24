@@ -14,9 +14,9 @@ export const ProgressContainer = styled.div(({ theme }) => css`
     height: 7px;
     border-radius: 5px;
 `);
-export const ProgressBar = styled.div<{ percent: number }>(({ theme, percent }) => css`
+export const ProgressBar = styled.div<{ $percent: number }>(({ theme, $percent }) => css`
     background: ${theme.colors.warning};
-    width: ${percent}%;
+    width: ${$percent}%;
     height: 7px;
     border-radius: 5px;
 `);

@@ -11,28 +11,36 @@ export interface DoubleButtonProps extends Omit<ButtonProps, "appearance"> {
     intlKey?: string;
     color?: ColorsKeys;
     leftContent: ReactElement;
+    testId?: string;
 }
 
 const DoubleButton: FC<DoubleButtonProps> = ({
     label,
-    fullWidth,
-    disabled,
-    loading,
     leftContent,
     onClick,
+    fullWidth = false,
+    disabled = false,
+    loading = false,
     loadingLabel = "messages.loading",
-    type = "button"
+    type = "button",
+    testId = "double-button"
 }) => {
     return (
         <StyledButton
-            fullWidth={fullWidth}
+            $fullWidth={fullWidth}
             disabled={disabled || loading}
             onClick={onClick}
             type={type}
+            data-testid={testId}
         >
             {loading ? (
-                <LoadingContainer align="center" justify="center" gap="spacing4">
-                    <SpinIcon type="progress_activity" />
+                <LoadingContainer
+                    data-testid="loading-container"
+                    align="center"
+                    justify="center"
+                    gap="spacing4"
+                >
+                    <SpinIcon type="progress_activity" testId="spinner" />
                     <Text
                         as="span"
                         intlKey={loadingLabel}
@@ -42,10 +50,18 @@ const DoubleButton: FC<DoubleButtonProps> = ({
                 </LoadingContainer>
             ) : (
                 <>
-                    <LeftContent direction="column" align="start">
+                    <LeftContent
+                        direction="column"
+                        align="start"
+                        data-testid="left-content"
+                    >
                         {leftContent}
                     </LeftContent>
-                    <RightContent align="center" disabled={disabled}>
+                    <RightContent
+                        align="center"
+                        disabled={disabled}
+                        data-testid="right-content"
+                    >
                         <Text
                             as="span"
                             intlKey={label}

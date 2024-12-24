@@ -31,9 +31,8 @@ const Drawer: FC<DrawerProps> = ({ isOpen, onClose, drawerState }) => (
                 onClick={onClose}
             />
             <Text
-                intlKey={`pages.shop.${drawerState}`}
+                intlKey={drawerState ? `pages.shop.${drawerState}` : "pages.shop.product_details"}
                 appearance="headline4"
-                textAlign="left"
                 textTransform="capitalize"
             />
             <div style={{ width: 30 }} />

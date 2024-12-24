@@ -2,6 +2,10 @@ import { createGlobalStyle } from "styled-components";
 import "../../assets/css/fonts.css";
 
 export const GlobalStyle = createGlobalStyle`
+    #root {
+        height: 100%;
+    }
+
     *,*::before,*::after {
         box-sizing: border-box;
         margin: 0;

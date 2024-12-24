@@ -76,13 +76,11 @@ const LoginPage = () => {
                         as="h1"
                         intlKey="pages.login.welcome_back"
                         appearance="headline2"
-                        textAlign="left"
                     />
                     <Text
                         as="p"
                         intlKey="pages.login.login_message"
                         color="dark80"
-                        textAlign="left"
                     />
                 </Flex>
 
@@ -103,7 +101,7 @@ const LoginPage = () => {
                                 name="password"
                                 type="password"
                                 prefixIconType="lock"
-                                postfixIconType="visibility_off"
+                                suffixIconType="visibility_off"
                             />
                         </Flex>
                         <Link to="/shop">

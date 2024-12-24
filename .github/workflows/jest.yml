@@ -26,8 +26,10 @@ jobs:
 
       - name: Run Jest Tests
         working-directory: ./client
-        run: yarn test
-        
-      - name: Code Coverage Report
-        uses: romeovs/lcov-reporter-action@v0.4.0
-            
+        run: yarn test --coverage --coverageThreshold='{"global":{"branches":80,"functions":80,"lines":80,"statements":80}}'
+
+      - name: Upload coverage reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: ./client/coverage

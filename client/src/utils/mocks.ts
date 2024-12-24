@@ -43,16 +43,10 @@ export const productMock: IProduct = {
 };
 
 export const productListMock: IProduct[] = [
-    // @ts-expect-error: temporary mock
-    { id: "1", ...productMock, image: image1 },
-    // @ts-expect-error: temporary mock
-    { id: "2", ...productMock, image: image2 },
-    // @ts-expect-error: temporary mock
-    { id: "3", ...productMock, image: image3 },
-    // @ts-expect-error: temporary mock
-    { id: "4", ...productMock, image: image4 },
-    // @ts-expect-error: temporary mock
-    { id: "5", ...productMock, image: image5 },
-    // @ts-expect-error: temporary mock
-    { id: "6", ...productMock, image: image1 }
+    { ...productMock, image: image1, id: "1" },
+    { ...productMock, image: image2, id: "2" },
+    { ...productMock, image: image3, id: "3" },
+    { ...productMock, image: image4, id: "4" },
+    { ...productMock, image: image5, id: "5" },
+    { ...productMock, image: image1, id: "6" }
 ];

@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
 
 import { typography } from "../../../providers/theme/defaults/typography";
 import { spacings } from "../../../providers/theme/defaults/spacings";
@@ -50,7 +49,6 @@ const meta = {
 
     },
     args: {
-        onClick: fn(),
         plainText: SampleText,
         textAlign: "left"
     },
@@ -61,8 +59,7 @@ const meta = {
                 appearance={args.appearance}
                 plainText={args.appearance}
                 textTransform="capitalize"
-                textAlign="left"
-                customStyles={{ minWidth: "180px" }}
+                style={{ minWidth: "180px" }}
             />
 
             <Flex direction="column" align="start" gap="spacing2">

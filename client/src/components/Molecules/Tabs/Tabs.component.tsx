@@ -18,7 +18,7 @@ const Tabs: FC<TabsProps> = ({ tabs }) => {
 
     return (
         <Flex direction="column">
-            <Flex gap="spacing3" marginBottom="spacing4" $wrap data-full-width>
+            <Flex gap="spacing3" marginBottom="spacing4" wrap data-full-width>
                 {tabs.map((tab, index) => (
                     <Tab
                         key={tab.label}

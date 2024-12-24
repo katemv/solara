@@ -9,14 +9,14 @@ const meta = {
     title: "Molecules/Modal",
     component: Modal,
     argTypes: {
-        visible: { control: "boolean" },
-        maxWidth: { control: "number" },
-        maxHeight: { control: "number" },
-        minHeight: { control: "number" }
+        $visible: { control: "boolean" },
+        $maxWidth: { control: "number" },
+        $maxHeight: { control: "number" },
+        $minHeight: { control: "number" }
     },
     args: {
-        visible: false,
-        maxWidth: 500
+        $visible: false,
+        $maxWidth: 500
     }
 } satisfies Meta<typeof Modal>;
 
@@ -24,22 +24,21 @@ export default meta;
 
 type Story = StoryObj<ModalProps>;
 
-function StoryComponent({ maxWidth, maxHeight, minHeight }: ModalProps) {
+function StoryComponent({ $maxWidth, $maxHeight, $minHeight }: ModalProps) {
     const [isVisible, setIsVisible] = useState(false);
 
     return (
         <>
             <Button label="Open" onClick={() => setIsVisible(true)} />
             <Modal
-                {...{ maxHeight, maxWidth, minHeight }}
-                visible={isVisible}
+                {...{ $maxHeight, $maxWidth, $minHeight }}
+                $visible={isVisible}
                 onClose={() => setIsVisible(false)}
             >
                 <Text
                     as="h3"
                     plainText="Luminary Dust"
                     appearance="headline4"
-                    textAlign="left"
                     marginBottom="spacing4"
                     textTransform="uppercase"
                 />
@@ -51,7 +50,6 @@ function StoryComponent({ maxWidth, maxHeight, minHeight }: ModalProps) {
                         this unique highlighter acts as a wearable homage to the beauty of the cosmos.
                     `}
                     appearance="paragraph"
-                    textAlign="left"
                     fontWeight={300}
                     color="dark20"
                 />

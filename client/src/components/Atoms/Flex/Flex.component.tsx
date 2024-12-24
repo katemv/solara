@@ -1,40 +1,50 @@
-import { HTMLAttributes } from "react";
-import { css, styled } from "styled-components";
+import { FC, HTMLAttributes } from "react";
+
 import { SpacingKeys } from "../../../providers/theme/types/types";
+import { StyledFlex } from "./styles";
 
 export interface FlexProps extends HTMLAttributes<HTMLDivElement> {
     justify?: "start" | "end" | "center" | "space-between" | "space-around";
     align?: "start" | "end" | "center" | "space-between" | "space-around" | "baseline";
     direction?: "row" | "column";
-    $wrap?: boolean;
+    wrap?: boolean;
     gap?: SpacingKeys;
     marginBottom?: SpacingKeys;
     fullWidth?: boolean;
     fullHeight?: boolean;
+    testId?: string;
+    onClick?: () => void;
 }
 
-const Flex = styled.div<FlexProps>`
-    ${({
-        justify,
-        align,
-        direction,
-        $wrap,
-        gap,
-        marginBottom,
-        fullWidth,
-        fullHeight,
-        theme
-    }) => css`
-        display: flex;
-        justify-content: ${justify};
-        align-items: ${align};
-        flex-direction: ${direction};
-        flex-wrap: ${$wrap ? "wrap" : "nowrap"};
-        margin-bottom: ${marginBottom ? theme.spacings[marginBottom] : "0"};
-        width: ${fullWidth ? "100%" : "auto"};
-        height: ${fullHeight ? "100%" : "auto"};
-        ${gap && `gap: ${theme.spacings[gap]};`}
-    `}
-`;
+const Flex: FC<FlexProps> = ({
+    justify,
+    align,
+    direction,
+    wrap,
+    gap,
+    marginBottom,
+    fullWidth,
+    fullHeight,
+    children,
+    onClick,
+    className,
+    testId = "flex"
+}) => (
+    <StyledFlex
+        $justify={justify}
+        $align={align}
+        direction={direction}
+        $wrap={wrap}
+        $gap={gap}
+        $marginBottom={marginBottom}
+        $fullWidth={fullWidth}
+        $fullHeight={fullHeight}
+        data-testid={testId}
+        className={className}
+        onClick={onClick}
+    >
+        {children}
+    </StyledFlex>
+);
 
 export default Flex;

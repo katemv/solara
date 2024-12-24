@@ -1,28 +1,22 @@
-import { CSSProperties, FC, HTMLAttributes, JSX } from "react";
+import { CSSProperties, FC, JSX } from "react";
 import { useIntl } from "react-intl";
 
 import { ColorsKeys, SpacingKeys, TypographyKeys } from "../../../providers/theme/types/types";
 import { StyledText } from "./styles";
 
-type BaseTextProps = Partial<TextStyleProps> & HTMLAttributes<HTMLDivElement>;
-
-export interface TextProps extends BaseTextProps {
+export interface TextProps {
     as?: keyof JSX.IntrinsicElements;
     intlKey?: string;
     plainText?: string;
-    customStyles?: CSSProperties;
-}
-
-export interface TextStyleProps {
-    appearance: TypographyKeys;
+    style?: CSSProperties;
     color?: ColorsKeys;
-    textAlign: "left" | "right" | "center" | "justify";
-    fontWeight: number;
-    textTransform: "uppercase" | "none" | "capitalize";
-    marginBottom: SpacingKeys | 0;
-    style: CSSProperties;
+    values?: Record<string, string | number>;
+    appearance?: TypographyKeys;
+    marginBottom?: SpacingKeys | 0;
+    textAlign?: "left" | "right" | "center" | "justify";
+    fontWeight?: number;
+    textTransform?: "uppercase" | "none" | "capitalize";
     textWrap?: "balance" | "pretty";
-    values: Record<string, string | number>;
 }
 
 const Text: FC<TextProps> = ({
@@ -33,21 +27,21 @@ const Text: FC<TextProps> = ({
     fontWeight = 0,
     appearance = "paragraph",
     color = "white",
-    textAlign = "center",
+    textAlign = "left",
     textTransform = "none",
     marginBottom = 0,
     textWrap = "balance",
-    customStyles = {}
+    style = {}
 }) => {
     const { formatMessage } = useIntl();
 
     return (
         <StyledText
             as={as}
-            appearance={appearance}
             color={color}
-            fontWeight={fontWeight}
-            style={customStyles}
+            style={style}
+            $appearance={appearance}
+            $fontWeight={fontWeight}
             $textTransform={textTransform}
             $marginBottom={marginBottom}
             $textAlign={textAlign}

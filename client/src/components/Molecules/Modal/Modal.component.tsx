@@ -4,10 +4,10 @@ import { createPortal } from "react-dom";
 import { animationDuration, Backdrop, FixedButtonContainer, ModalContainer, ScrollContainer } from "./styles";
 
 export interface ModalProps {
-    visible: boolean;
-    maxWidth?: number;
-    maxHeight?: number;
-    minHeight?: number | "auto";
+    $visible: boolean;
+    $maxWidth?: number;
+    $maxHeight?: number;
+    $minHeight?: number | "auto";
     onClose: () => void;
     children?: ReactNode;
     fixedButton?: ReactNode;
@@ -15,19 +15,19 @@ export interface ModalProps {
 const Modal: FC<ModalProps> = ({
     onClose,
     children,
-    visible,
-    maxHeight,
-    minHeight = 200,
-    maxWidth,
+    $visible,
+    $maxHeight,
+    $minHeight = 200,
+    $maxWidth,
     fixedButton
 }) => {
     const ref = createRef<HTMLDivElement>();
-    const [renderModal, setRenderModal] = useState(visible);
+    const [renderModal, setRenderModal] = useState($visible);
 
     useEffect(() => {
         let timer: ReturnType<typeof setTimeout>;
 
-        if (visible) {
+        if ($visible) {
             setRenderModal(true);
         } else {
             // Wait for the animation to finish before unmounting
@@ -37,7 +37,7 @@ const Modal: FC<ModalProps> = ({
         }
 
         return () => clearTimeout(timer);
-    }, [visible]);
+    }, [$visible]);
 
     const handleClickOutside = useCallback(
         (event: MouseEvent): void => {
@@ -55,7 +55,7 @@ const Modal: FC<ModalProps> = ({
     );
 
     useEffect(() => {
-        if (visible) {
+        if ($visible) {
             document.addEventListener("mousedown", handleClickOutside);
             document.body.style.overflow = "hidden";
         } else {
@@ -67,17 +67,17 @@ const Modal: FC<ModalProps> = ({
             document.body.style.overflow = "";
             document.removeEventListener("mousedown", handleClickOutside);
         };
-    }, [visible, handleClickOutside]);
+    }, [$visible, handleClickOutside]);
 
     return renderModal ?
         createPortal(
-            <Backdrop visible={visible}>
+            <Backdrop $visible={$visible}>
                 <ModalContainer
                     ref={ref}
-                    visible={visible}
-                    maxHeight={maxHeight}
-                    maxWidth={maxWidth}
-                    minHeight={minHeight}
+                    $visible={$visible}
+                    $maxHeight={$maxHeight}
+                    $maxWidth={$maxWidth}
+                    $minHeight={$minHeight}
                 >
                     <ScrollContainer>
                         {children}

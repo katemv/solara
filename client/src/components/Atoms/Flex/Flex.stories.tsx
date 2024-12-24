@@ -20,7 +20,7 @@ const meta = {
             control: "select",
             options: ["row", "column"]
         },
-        $wrap: {
+        wrap: {
             control: "boolean"
         },
         gap: {
@@ -45,7 +45,7 @@ const meta = {
         fullWidth: true,
         gap: "spacing2",
         direction: "row",
-        $wrap: false,
+        wrap: false,
         marginBottom: "spacing1"
     }
 } satisfies Meta<typeof Flex>;

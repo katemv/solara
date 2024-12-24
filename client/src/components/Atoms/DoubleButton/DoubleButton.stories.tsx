@@ -19,7 +19,6 @@ const meta = {
             <Text
                 as="span"
                 plainText="This is additional content"
-                textAlign="left"
                 fontWeight={600}
             />
         ),

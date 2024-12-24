@@ -17,7 +17,7 @@ type Story = StoryObj<ProductDetailsModalProps>;
 export const ProductDetailsModalStory: Story = {
     args: {
         product: productMock,
-        visible: true,
+        $visible: true,
         onClose: fn()
     }
 };

@@ -22,7 +22,12 @@ const Layout = () => {
     return (
         <>
             <Header>
-                <HeaderContainer fullWidth fullHeight justify="space-between" align="center">
+                <HeaderContainer
+                    fullWidth
+                    fullHeight
+                    justify="space-between"
+                    align="center"
+                >
                     <Logo />
                     <Nav>
                         {isAuthorized ? (

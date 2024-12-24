@@ -27,14 +27,12 @@ const ProductItem: FC<ProductProps> = ({ product, horizontal, onClick }) => {
                     color="dark20"
                     textTransform="uppercase"
                     fontWeight={300}
-                    textAlign="left"
                 />
-                <Text as="h6" plainText={product.name} appearance="headline4" textAlign="left" />
+                <Text as="h6" plainText={product.name} appearance="headline4" />
                 <Text
                     as="h6"
                     plainText={convertPrice(product.price)}
                     appearance="headline4"
-                    textAlign="left"
                     color="blue80"
                 />
             </Flex>

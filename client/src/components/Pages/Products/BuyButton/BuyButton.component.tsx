@@ -33,13 +33,11 @@ const BuyButton: FC<BuyButtonProps> = ({
                 <Text
                     as="span"
                     plainText={convertPrice(price)}
-                    textAlign="left"
                     fontWeight={600}
                 />
                 <Text
                     as="span"
                     intlKey="pages.shop.unit_price"
-                    textAlign="left"
                     appearance="small"
                     color="dark10"
                 />

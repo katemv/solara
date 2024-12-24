@@ -32,7 +32,7 @@ const Reviews: FC<ReviewsProps> = ({ rating, ...rest }) => {
                         plainText="/5"
                         appearance="headline5"
                         fontWeight={500}
-                        customStyles={{ lineHeight: 1.7 }}
+                        style={{ lineHeight: 1.7 }}
                         color="dark20"
                     />
                 </Flex>
@@ -42,9 +42,8 @@ const Reviews: FC<ReviewsProps> = ({ rating, ...rest }) => {
                     color="dark60"
                     fontWeight={500}
                     marginBottom="spacing3"
-                    textAlign="left"
                     values={{ reviewCount: totalReviews }}
-                    customStyles={{ minWidth: "130px" }}
+                    style={{ minWidth: "130px" }}
                 />
                 <Flex gap="spacing1">
                     {ratings.map((element) => (
@@ -52,7 +51,7 @@ const Reviews: FC<ReviewsProps> = ({ rating, ...rest }) => {
                             key={element}
                             type="star"
                             color={element <= Math.floor(rating) ? "warning" : "dark60"}
-                            filled
+                            $filled
                         />
                     ))}
                 </Flex>
@@ -65,10 +64,10 @@ const Reviews: FC<ReviewsProps> = ({ rating, ...rest }) => {
                             appearance="headline6"
                             intlKey="pages.shop.star_count"
                             values={{ starCount: element }}
-                            customStyles={{ width: "65px" }}
+                            style={{ width: "65px" }}
                         />
                         <ProgressContainer>
-                            <ProgressBar percent={reviews[element] / totalReviews * 100} />
+                            <ProgressBar $percent={reviews[element] / totalReviews * 100} />
                         </ProgressContainer>
                     </Flex>
                 ))}

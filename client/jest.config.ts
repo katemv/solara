@@ -11,7 +11,11 @@ const config: Config = {
     transform: {
         "^.+.tsx?$": ["ts-jest", {}]
     },
-    transformIgnorePatterns: ["/node_modules/", "^.+\\.module\\.(css|sass|scss)$"]
+    transformIgnorePatterns: ["/node_modules/", "^.+\\.module\\.(css|sass|scss)$"],
+    "collectCoverageFrom": [
+        "src/**/*.{js,jsx,ts,tsx}",
+        "!src/**/*.d.ts"
+    ]
 };
 
 export default config;

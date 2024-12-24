@@ -1,13 +1,17 @@
 import { css, styled } from "styled-components";
 
-import { DoubleButtonProps } from "./DoubleButton.component";
 import Flex from "../Flex/Flex.component";
 
-export const StyledButton = styled.button<Pick<DoubleButtonProps, "fullWidth">>(
-    ({ theme, fullWidth, disabled }) => css`
+interface DoubleButtonProps {
+    $fullWidth: boolean;
+    disabled: boolean;
+}
+
+export const StyledButton = styled.button<DoubleButtonProps>(
+    ({ theme, $fullWidth, disabled }) => css`
         height: 70px;
         background-color: ${theme.colors.purple80};
-        width: ${fullWidth ? "100%" : "auto"};
+        width: ${$fullWidth ? "100%" : "auto"};
         border-radius: 10px;
         display: flex;
         align-items: center;
@@ -54,7 +58,7 @@ export const RightContent = styled(Flex)<Pick<DoubleButtonProps, "disabled">>(({
     `}
 `);
 
-export const LeftContent = styled(Flex)<Pick<DoubleButtonProps, "disabled">>(({ theme }) => css`
+export const LeftContent = styled(Flex)(({ theme }) => css`
     padding: 0 ${theme.spacings.spacing5};
 `);
 

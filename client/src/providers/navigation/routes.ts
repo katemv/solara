@@ -2,7 +2,7 @@ enum ROUTES {
     LOGIN = "/login",
     SIGNUP = "/signup",
     VERIFY = "/verify",
-    SHOP = "/shop",
+    SHOP = "/",
     CART = "/cart",
     ORDERS = "/orders",
     PROFILE = "/profile",

@@ -3,17 +3,17 @@ import Flex from "../Flex/Flex.component";
 import Icon from "../Icon/Icon.component";
 
 interface StyledInputProps {
-    prefixIconType?: string;
-    postfixIconType?: string;
-    error?: boolean;
+    $prefixIconType?: string;
+    $suffixIconType?: string;
+    $error?: boolean;
 }
 
 interface IconProps {
-    error: boolean;
+    $error: boolean;
 }
 
 export const StyledInput = styled.input<StyledInputProps>(
-    ({ theme, prefixIconType, postfixIconType, error }) => css`
+    ({ theme, $prefixIconType, $suffixIconType, $error }) => css`
         color: ${theme.colors.white};
         background: ${theme.colors.dark90};
         border-radius: 10px;
@@ -22,15 +22,15 @@ export const StyledInput = styled.input<StyledInputProps>(
         background: ${theme.colors.dark90};
         padding: 0 ${theme.spacings.spacing4};
         
-        ${prefixIconType && css`
+        ${$prefixIconType && css`
             padding-left: ${theme.spacings.spacing8};
         `}
 
-        ${postfixIconType && css`
+        ${$suffixIconType && css`
             padding-right: ${theme.spacings.spacing8};
         `}
         
-        ${error && css`
+        ${$error && css`
             color: ${theme.colors.danger};
 
             &::placeholder {
@@ -51,27 +51,27 @@ export const Container = styled(Flex)`
     padding-top: 2px;
 `;
 
-export const PrefixIcon = styled(Icon)<IconProps>(({ theme, error }) => css`
+export const PrefixIcon = styled(Icon)<IconProps>(({ theme, $error }) => css`
     position: absolute;
     left: ${theme.spacings.spacing4};
     font-size: 20px;
 
-    ${error && css`
+    ${$error && css`
         color: ${theme.colors.danger};
     `}
 `);
 
-export const PostfixIcon = styled(Icon)<IconProps>(({ theme, error }) => css`
+export const PostfixIcon = styled(Icon)<IconProps>(({ theme, $error }) => css`
     position: absolute;
     right: ${theme.spacings.spacing4};
     font-size: 20px;
 
-    ${error && css`
+    ${$error && css`
         color: ${theme.colors.danger};
     `}
 `);
 
-export const PasswordButton = styled.button<IconProps>(({ theme, error }) => css`
+export const PasswordButton = styled.button<IconProps>(({ theme, $error }) => css`
     background: transparent;
     position: absolute;
     right: ${theme.spacings.spacing4};
@@ -81,7 +81,7 @@ export const PasswordButton = styled.button<IconProps>(({ theme, error }) => css
     & span {
         font-size: 20px;
 
-        ${error && css`
+        ${$error && css`
             color: ${theme.colors.danger};
         `}
     }

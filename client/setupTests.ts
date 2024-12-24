@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom";
 
 beforeEach(() => {
-    console.log("setup tests");
+    // console.log("setup tests");
 });
