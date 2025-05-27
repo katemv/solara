@@ -1,17 +1,18 @@
 import type { Metadata } from 'next'
-import { Plus_Jakarta_Sans, Bebas_Neue } from 'next/font/google'
+import { Play, Zen_Dots } from 'next/font/google'
 import './globals.css'
 
-const plusJakarta = Plus_Jakarta_Sans({
+const play = Play({
+  weight: '400',
   subsets: ['latin'],
-  variable: '--font-plus-jakarta',
+  variable: '--font-play',
   display: 'swap'
 })
 
-const bebasNeue = Bebas_Neue({
+const zenDots = Zen_Dots({
   weight: '400',
   subsets: ['latin'],
-  variable: '--font-bebas',
+  variable: '--font-zen-dots',
   display: 'swap'
 })
 
@@ -26,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang={'en'} className={`${plusJakarta.variable} ${bebasNeue.variable}`}>
+    <html lang={'en'} className={`${play.variable} ${zenDots.variable}`}>
       <body>{children}</body>
     </html>
   )

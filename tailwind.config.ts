@@ -10,8 +10,8 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        'jakarta': ['var(--font-plus-jakarta)'],
-        'bebas': ['var(--font-bebas)']
+        'play': ['var(--font-play)'],
+        'zen-dots': ['var(--font-zen-dots)']
       },
       colors: {
         purple: {
@@ -79,14 +79,20 @@ const config: Config = {
     }
   },
   plugins: [
-    plugin(function({ addBase }) {
+    plugin(function({ addBase, addUtilities }) {
       addBase({
         'html': { 
           color: '#FFFFFF',
           '-webkit-font-smoothing': 'antialiased',
-          '-moz-osx-font-smoothing': 'grayscale'
+          '-moz-osx-font-smoothing': 'grayscale',
+          fontFamily: 'var(--font-play)'
         },
         'body': { backgroundColor: '#16161E' }
+      })
+      addUtilities({
+        '.text-balance': {
+          'text-wrap': 'balance'
+        }
       })
     })
   ]

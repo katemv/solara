@@ -60,8 +60,8 @@ export default function SplashCursor({
   VELOCITY_DISSIPATION = 2,
   PRESSURE = 0.1,
   PRESSURE_ITERATIONS = 20,
-  CURL = 3,
-  SPLAT_RADIUS = 0.2,
+  CURL = 4,
+  SPLAT_RADIUS = 0.4,
   SPLAT_FORCE = 6000,
   SHADING = true,
   COLOR_UPDATE_SPEED = 10,
@@ -135,7 +135,7 @@ export default function SplashCursor({
 
       const isWebGL2 = "drawBuffers" in gl;
 
-      let supportLinearFiltering = false;
+      let supportLinearFiltering;
       let halfFloat = null;
 
       if (isWebGL2) {
@@ -1539,11 +1539,11 @@ export default function SplashCursor({
   ]);
 
   return (
-    <div className="fixed top-0 left-0 z-50 pointer-events-none w-full h-full">
+    <div className={'absolute inset-0 z-50 pointer-events-none'}>
       <canvas
         ref={canvasRef}
         id="fluid"
-        className="w-full full block"
+        className={'w-full h-full block'}
       ></canvas>
     </div>
   );
