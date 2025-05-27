@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Play, Zen_Dots } from 'next/font/google'
+import { Header } from '@/components/Organisms/Header/Header'
 import './globals.css'
 
 const play = Play({
@@ -28,7 +29,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang={'en'} className={`${play.variable} ${zenDots.variable}`}>
-      <body>{children}</body>
+      <body>
+        <Header />
+        {children}
+      </body>
     </html>
   )
 } 
