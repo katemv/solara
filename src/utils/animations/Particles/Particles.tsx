@@ -138,8 +138,8 @@ const Particles: React.FC<ParticlesProps> = ({
 
         const handleMouseMove = (e: MouseEvent) => {
             const rect = container.getBoundingClientRect();
-            const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-            const y = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
+            const x = (((e.clientX - rect.left) / rect.width) * 2) - 1;
+            const y = -((((e.clientY - rect.top) / rect.height) * 2) - 1);
 
             mouseRef.current = { x, y };
         };
@@ -161,10 +161,10 @@ const Particles: React.FC<ParticlesProps> = ({
             let x: number, y: number, z: number, len: number;
 
             do {
-                x = Math.random() * 2 - 1;
-                y = Math.random() * 2 - 1;
-                z = Math.random() * 2 - 1;
-                len = x * x + y * y + z * z;
+                x = (Math.random() * 2) - 1;
+                y = (Math.random() * 2) - 1;
+                z = (Math.random() * 2) - 1;
+                len = (x * x) + (y * y) + (z * z);
             } while (len > 1 || len === 0);
             const r = Math.cbrt(Math.random());
 

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 interface ColorRGB {
   r: number;
@@ -158,11 +158,11 @@ export default function SplashCursor({
 
             const halfFloatTexType = isWebGL2 ?
                 (gl as WebGL2RenderingContext).HALF_FLOAT :
-                (halfFloat && (halfFloat as any).HALF_FLOAT_OES) || 0;
+                (halfFloat && (halfFloat as { HALF_FLOAT_OES: number }).HALF_FLOAT_OES) || 0;
 
-            let formatRGBA: any;
-            let formatRG: any;
-            let formatR: any;
+            let formatRGBA: { internalFormat: number; format: number } | null;
+            let formatRG: { internalFormat: number; format: number } | null;
+            let formatR: { internalFormat: number; format: number } | null;
 
             if (isWebGL2) {
                 formatRGBA = getSupportedFormat(
@@ -927,6 +927,11 @@ export default function SplashCursor({
         const r = ext.formatR;
         const filtering = ext.supportLinearFiltering ? gl.LINEAR : gl.NEAREST;
 
+        if (!rgba || !rg || !r) {
+            console.error("Failed to get supported texture formats");
+            return;
+        }
+
         gl.disable(gl.BLEND);
 
         if (!dye) {
@@ -1373,7 +1378,7 @@ export default function SplashCursor({
         pointer.down = true;
         pointer.moved = false;
         pointer.texcoordX = posX / canvas!.width;
-        pointer.texcoordY = 1 - posY / canvas!.height;
+        pointer.texcoordY = 1 - (posY / canvas!.height);
         pointer.prevTexcoordX = pointer.texcoordX;
         pointer.prevTexcoordY = pointer.texcoordY;
         pointer.deltaX = 0;
@@ -1390,7 +1395,7 @@ export default function SplashCursor({
         pointer.prevTexcoordX = pointer.texcoordX;
         pointer.prevTexcoordY = pointer.texcoordY;
         pointer.texcoordX = posX / canvas!.width;
-        pointer.texcoordY = 1 - posY / canvas!.height;
+        pointer.texcoordY = 1 - (posY / canvas!.height);
         pointer.deltaX = correctDeltaX(
             pointer.texcoordX - pointer.prevTexcoordX
         )!;
@@ -1434,10 +1439,10 @@ export default function SplashCursor({
             g = 0,
             b = 0;
         const i = Math.floor(h * 6);
-        const f = h * 6 - i;
+        const f = (h * 6) - i;
         const p = v * (1 - s);
-        const q = v * (1 - f * s);
-        const t = v * (1 - (1 - f) * s);
+        const q = v * (1 - (f * s));
+        const t = v * (1 - ((1 - f) * s));
 
         switch (i % 6) {
         case 0:
