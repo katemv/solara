@@ -1487,52 +1487,36 @@ export default function SplashCursor({
     }
 
     // -------------------- Event Listeners --------------------
+    let animationStarted = false;
+
+    function startAnimation() {
+        if (!animationStarted) {
+            animationStarted = true;
+            updateFrame();
+        }
+    }
+
     window.addEventListener("mousedown", (e) => {
         const pointer = pointers[0];
-        const posX = scaleByPixelRatio(e.clientX);
-        const posY = scaleByPixelRatio(e.clientY);
+        const rect = canvas!.getBoundingClientRect();
+        const posX = scaleByPixelRatio(e.clientX - rect.left);
+        const posY = scaleByPixelRatio(e.clientY - rect.top);
 
+        startAnimation();
         updatePointerDownData(pointer, -1, posX, posY);
         clickSplat(pointer);
     });
 
-    // Start rendering on first mouse move
-    function handleFirstMouseMove(e: MouseEvent) {
-        const pointer = pointers[0];
-        const posX = scaleByPixelRatio(e.clientX);
-        const posY = scaleByPixelRatio(e.clientY);
-        const color = generateColor();
-
-        updateFrame();
-        updatePointerMoveData(pointer, posX, posY, color);
-        document.body.removeEventListener("mousemove", handleFirstMouseMove);
-    }
-    document.body.addEventListener("mousemove", handleFirstMouseMove);
-
     window.addEventListener("mousemove", (e) => {
         const pointer = pointers[0];
-        const posX = scaleByPixelRatio(e.clientX);
-        const posY = scaleByPixelRatio(e.clientY);
+        const rect = canvas!.getBoundingClientRect();
+        const posX = scaleByPixelRatio(e.clientX - rect.left);
+        const posY = scaleByPixelRatio(e.clientY - rect.top);
         const color = pointer.color;
 
+        startAnimation();
         updatePointerMoveData(pointer, posX, posY, color);
     });
-
-    // Start rendering on first touch
-    function handleFirstTouchStart(e: TouchEvent) {
-        const touches = e.targetTouches;
-        const pointer = pointers[0];
-
-        for (let i = 0; i < touches.length; i++) {
-            const posX = scaleByPixelRatio(touches[i].clientX);
-            const posY = scaleByPixelRatio(touches[i].clientY);
-
-            updateFrame();
-            updatePointerDownData(pointer, touches[i].identifier, posX, posY);
-        }
-        document.body.removeEventListener("touchstart", handleFirstTouchStart);
-    }
-    document.body.addEventListener("touchstart", handleFirstTouchStart);
 
     window.addEventListener(
         "touchstart",
@@ -1541,9 +1525,11 @@ export default function SplashCursor({
             const pointer = pointers[0];
 
             for (let i = 0; i < touches.length; i++) {
-                const posX = scaleByPixelRatio(touches[i].clientX);
-                const posY = scaleByPixelRatio(touches[i].clientY);
+                const rect = canvas!.getBoundingClientRect();
+                const posX = scaleByPixelRatio(touches[i].clientX - rect.left);
+                const posY = scaleByPixelRatio(touches[i].clientY - rect.top);
 
+                startAnimation();
                 updatePointerDownData(pointer, touches[i].identifier, posX, posY);
             }
         },
@@ -1557,9 +1543,11 @@ export default function SplashCursor({
             const pointer = pointers[0];
 
             for (let i = 0; i < touches.length; i++) {
-                const posX = scaleByPixelRatio(touches[i].clientX);
-                const posY = scaleByPixelRatio(touches[i].clientY);
+                const rect = canvas!.getBoundingClientRect();
+                const posX = scaleByPixelRatio(touches[i].clientX - rect.left);
+                const posY = scaleByPixelRatio(touches[i].clientY - rect.top);
 
+                startAnimation();
                 updatePointerMoveData(pointer, posX, posY, pointer.color);
             }
         },
@@ -1574,7 +1562,6 @@ export default function SplashCursor({
             updatePointerUpData(pointer);
         }
     });
-    // ------------------------------------------------------------
     }, [
         SIM_RESOLUTION,
         DYE_RESOLUTION,
