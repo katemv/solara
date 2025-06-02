@@ -16,7 +16,7 @@ export const Input = ({ icon, className, ...props }: InputProps) => {
             )}
             <input
                 className={cn(
-                    "w-full h-12 rounded-md bg-gray-800 text-white placeholder-gray-400 pl-10 pr-4",
+                    "w-full h-12 rounded-md bg-gray-700 text-white placeholder-gray-400 pl-10 pr-4",
                     "focus:outline-none focus:ring-2 focus:ring-violet-500",
                     "transition-all duration-200",
                     icon ? "" : "pl-4"

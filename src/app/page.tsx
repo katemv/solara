@@ -8,7 +8,7 @@ import { IProduct } from "@/models/Product";
 import SplashCursor from "@/utils/animations/SplashCursor/SplashCursor";
 import Particles from "@/utils/animations/Particles/Particles";
 
-export default function Home() {
+function HomePage() {
     const [products, setProducts] = useState<IProduct[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
@@ -76,3 +76,5 @@ export default function Home() {
         </main>
     );
 }
+
+export default HomePage;

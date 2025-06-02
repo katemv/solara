@@ -18,7 +18,7 @@ const LockIcon = () => (
     </svg>
 );
 
-export default function LoginPage() {
+function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -62,3 +62,5 @@ export default function LoginPage() {
         </div>
     );
 }
+
+export default LoginPage;
