@@ -1,18 +1,17 @@
 import { cn } from "@/utils/tailwind";
-import { ReactNode } from "react";
+import { ReactNode, ButtonHTMLAttributes } from "react";
 
 type ButtonVariant = "gradient-outlined" | "default"
 type ButtonSize = "sm" | "base" | "lg"
 
-interface ButtonProps {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode
   variant?: ButtonVariant
   size?: ButtonSize
   className?: string
-  onClick?: () => void
 }
 
-export const Button = ({ children, variant = "default", size = "base", className, onClick }: ButtonProps) => {
+export const Button = ({ children, variant = "default", size = "base", className, ...props }: ButtonProps) => {
     const sizeStyles = {
         sm: "h-10",
         base: "h-12",
@@ -30,7 +29,7 @@ export const Button = ({ children, variant = "default", size = "base", className
 
     const spanStyles = {
         "gradient-outlined": "bg-gray-900",
-        default: "bg-purple-800 hover:bg-purple-700"
+        default: "bg-purple-800 hover:bg-purple-700 disabled:bg-purple-900 disabled:opacity-50"
     };
 
     return (
@@ -38,9 +37,10 @@ export const Button = ({ children, variant = "default", size = "base", className
             className={cn(
                 "rounded-lg font-bold relative whitespace-nowrap bg-purple-500",
                 "transition-all duration-300 ease-in-out",
+                "disabled:cursor-not-allowed disabled:opacity-50",
                 sizeStyles[size], variantStyles[variant], className
             )}
-            onClick={onClick}
+            {...props}
         >
             <span
                 className={cn(

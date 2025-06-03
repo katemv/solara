@@ -1,4 +1,4 @@
-import { Header } from "@/components/Organisms/Header/Header";
+import { Header } from "@/components/Organisms/Header";
 import { ReactNode } from "react";
 
 export default function Layout({

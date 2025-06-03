@@ -5,6 +5,7 @@ import { Play, Zen_Dots } from "next/font/google";
 import Layout from "@/components/Templates/Layout";
 import AuthLayout from "@/components/Templates/AuthLayout";
 import { usePathname } from "next/navigation";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 const play = Play({
     weight: "400",
@@ -20,7 +21,7 @@ const zenDots = Zen_Dots({
     display: "swap"
 });
 
-const AUTH_ROUTES = ["/login"];
+const AUTH_ROUTES = ["/login", "/register"];
 
 export default function RootLayout({
     children
@@ -35,7 +36,9 @@ export default function RootLayout({
     return (
         <html lang={"en"} className={`${play.variable} ${zenDots.variable}`}>
             <body>
-                <SelectedLayout>{children}</SelectedLayout>
+                <AuthProvider>
+                    <SelectedLayout>{children}</SelectedLayout>
+                </AuthProvider>
             </body>
         </html>
     );

@@ -1,26 +1,38 @@
 "use client";
-import { Input } from "@/components/Atoms/Button/Input";
-import { Button } from "@/components/Atoms/Button/Button";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Mail, Lock } from "lucide-react";
+import { FormEvent, useState } from "react";
+import Link from "next/link";
+
+import { Button } from "@/components/Atoms/Button";
+import { Input } from "@/components/Atoms/Input";
+import { Alert, AlertDescription } from "@/components/UI";
+import { useAuth } from "@/contexts/AuthContext";
 import { SolaraLogo } from "@/assets/icons";
 
-const MailIcon = () => (
-    <svg width={"20"} height={"20"} fill={"none"} stroke={"currentColor"} strokeWidth={"1.5"} viewBox={"0 0 24 24"}>
-        <rect width={"18"} height={"14"} x={"3"} y={"5"} rx={"2"} />
-        <path d={"M3 7l9 6 9-6"} />
-    </svg>
-);
-const LockIcon = () => (
-    <svg width={"20"} height={"20"} fill={"none"} stroke={"currentColor"} strokeWidth={"1.5"} viewBox={"0 0 24 24"}>
-        <rect width={"14"} height={"10"} x={"5"} y={"11"} rx={"2"} />
-        <path d={"M12 17v-2"} />
-        <path d={"M7 11V7a5 5 0 0110 0v4"} />
-    </svg>
-);
-
 function LoginPage() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("admin@gmail.com");
+    const [password, setPassword] = useState("admin123");
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState("");
+
+    const { login } = useAuth();
+    const router = useRouter();
+
+    const handleSubmit = async (e: FormEvent) => {
+        e.preventDefault();
+        setIsLoading(true);
+        setError("");
+
+        try {
+            await login({ email, password });
+            router.push("/");
+        } catch (err) {
+            setError("Incorrect email or password");
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     return (
         <div className={"min-h-screen w-full flex items-center justify-center bg-auth-gradient"}>
@@ -32,31 +44,48 @@ function LoginPage() {
                     <h2 className={"text-2xl font-bold text-white"}>{"Welcome back!"}</h2>
                     <p className={"text-gray-400 text-sm"}>{"Log in with your data that you entered during your registration."}</p>
                 </div>
-                <form className={"flex flex-col gap-4"}>
+
+                {error && (
+                    <Alert variant={"destructive"}>
+                        <AlertDescription>
+                            {error}
+                        </AlertDescription>
+                    </Alert>
+                )}
+
+                <form onSubmit={handleSubmit} className={"flex flex-col gap-4"}>
                     <Input
                         type={"email"}
                         placeholder={"Email address"}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        icon={<MailIcon />}
+                        icon={<Mail size={20} />}
                         autoComplete={"email"}
+                        required
                     />
                     <Input
                         type={"password"}
                         placeholder={"Password"}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        icon={<LockIcon />}
+                        icon={<Lock size={20} />}
                         autoComplete={"current-password"}
+                        required
                     />
                     <div className={"flex justify-end"}>
                         <a href={"#"} className={"text-violet-400 text-sm hover:underline"}>{"Forgot password"}</a>
                     </div>
-                    <Button className={"mt-2 w-full"}>{"Log in"}</Button>
+                    <Button
+                        className={"mt-2 w-full"}
+                        type="submit"
+                        disabled={isLoading}
+                    >
+                        {isLoading ? "Logging in..." : "Log in"}
+                    </Button>
                 </form>
                 <div className={"flex justify-center gap-2 text-gray-400 text-sm mt-2"}>
                     <span>{"Don't have an account?"}</span>
-                    <a href={"#"} className={"text-violet-400 hover:underline"}>{"Sign up"}</a>
+                    <Link href={"/register"} className={"text-violet-400 hover:underline"}>{"Sign up"}</Link>
                 </div>
             </div>
         </div>

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/db";
 import Product from "@/models/Product";
+import { requireAdmin } from "@/lib/auth/auth-server";
 
 export async function GET() {
     try {
@@ -28,10 +29,12 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
     try {
+        await requireAdmin(request);
+
         await connectDB();
         const body = await request.json();
 
-        const requiredFields = ["name", "description", "price", "imageUrl", "category"];
+        const requiredFields = ["title", "description", "price", "imageUrl", "category", "brand"];
         const missingFields = requiredFields.filter((field) => !body[field]);
 
         if (missingFields.length > 0) {
@@ -55,6 +58,12 @@ export async function POST(request: NextRequest) {
         return NextResponse.json(product, { status: 201 });
     } catch (error) {
         if (error instanceof Error) {
+            if (error.message === "Authentication required" || error.message === "Admin access required") {
+                return NextResponse.json(
+                    { message: error.message },
+                    { status: 401 }
+                );
+            }
             return NextResponse.json(
                 { message: error.message },
                 { status: 400 }

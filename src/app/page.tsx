@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import { ProductCard } from "@/components/Pages/Products/ProductCard";
+import { Alert, AlertDescription } from "@/components/UI";
 import { IProduct } from "@/models/Product";
 import SplashCursor from "@/utils/animations/SplashCursor/SplashCursor";
 import Particles from "@/utils/animations/Particles/Particles";
@@ -39,8 +40,12 @@ function HomePage() {
 
     if (error) {
         return (
-            <div className={"flex justify-center items-center min-h-screen bg-dark-100 text-red-500"}>
-                {error}
+            <div className={"flex justify-center items-center min-h-screen bg-dark-100"}>
+                <Alert variant={"destructive"} className={"max-w-md"}>
+                    <AlertDescription>
+                        {error}
+                    </AlertDescription>
+                </Alert>
             </div>
         );
     }
