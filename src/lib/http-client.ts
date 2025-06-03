@@ -1,5 +1,4 @@
 import axios, { AxiosInstance } from "axios";
-import { responseHandler, responseErrorHandler } from "./axios-error-handler";
 
 function createHttpInstance(): AxiosInstance {
     const instance = axios.create({
@@ -9,7 +8,10 @@ function createHttpInstance(): AxiosInstance {
         }
     });
 
-    instance.interceptors.response.use(responseHandler, responseErrorHandler);
+    instance.interceptors.response.use((res) => res, (error) => {
+        console.error(error);
+        return Promise.reject(error);
+    });
 
     return instance;
 }

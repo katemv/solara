@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import { Mail, Lock } from "lucide-react";
 import { FormEvent, useState } from "react";
+import { AxiosError } from "axios";
 import Link from "next/link";
 
 import { Button } from "@/components/Atoms/Button";
@@ -28,7 +29,13 @@ function LoginPage() {
             await login({ email, password });
             router.push("/");
         } catch (err) {
-            setError("Incorrect email or password");
+            const error = err as AxiosError;
+
+            if (error.status === 401) {
+                setError("Incorrect email or password");
+            } else {
+                setError(error.message);
+            }
         } finally {
             setIsLoading(false);
         }
