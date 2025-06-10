@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/db";
 import Product from "@/models/Product";
-import { requireAdmin } from "@/lib/auth/auth-server";
+import { withAdmin } from "@/lib/auth/auth-server";
 
 export async function GET() {
     try {
@@ -27,10 +27,8 @@ export async function GET() {
     }
 }
 
-export async function POST(request: NextRequest) {
+export const POST = withAdmin(async (request: NextRequest) => {
     try {
-        await requireAdmin(request);
-
         await connectDB();
         const body = await request.json();
 
@@ -74,4 +72,4 @@ export async function POST(request: NextRequest) {
             { status: 400 }
         );
     }
-}
+});

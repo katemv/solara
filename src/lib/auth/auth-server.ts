@@ -1,3 +1,4 @@
+import { isDynamicServerError } from "next/dist/client/components/hooks-server-context";
 import { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
@@ -166,10 +167,32 @@ export async function refreshAccessToken(refreshToken: string): Promise<TokenPai
     }
 }
 
-export async function getAuthUser(request: NextRequest): Promise<IUser | null> {
-    try {
-        const authHeader = request.headers.get("Authorization");
+export async function revokeRefreshToken(userId: string): Promise<void> {
+    if (!userId) {
+        throw new Error("Invalid user ID provided for token revocation");
+    }
 
+    try {
+        await connectDB();
+        await User.findByIdAndUpdate(userId, {
+            refreshToken: null,
+            refreshTokenExpiresAt: null
+        });
+
+        console.log(`Refresh token revoked for user: ${userId}`);
+    } catch (error) {
+        throw new Error("Failed to revoke refresh token due to database error");
+    }
+}
+
+
+export type AuthenticatedHandler = (request: NextRequest, user: IUser) => Promise<Response>;
+export type AdminHandler = (request: NextRequest, user: IUser) => Promise<Response>;
+
+export async function getAuthUser(request: NextRequest): Promise<IUser | null> {
+    const authHeader = request.headers.get("Authorization");
+
+    try {
         if (!authHeader || !authHeader.startsWith("Bearer ")) {
             console.warn("Invalid Authorization header");
             return null;
@@ -203,6 +226,9 @@ export async function getAuthUser(request: NextRequest): Promise<IUser | null> {
 
         return user;
     } catch (error) {
+        if (isDynamicServerError(error)) {
+            throw error;
+        }
         console.error("Failed to get authenticated user:", error);
         return null;
     }
@@ -218,30 +244,62 @@ export async function requireAuth(request: NextRequest): Promise<IUser> {
     return user;
 }
 
-export async function requireAdmin(request: NextRequest): Promise<IUser> {
-    const user = await requireAuth(request);
+/**
+ * Wraps an API route handler with authentication
+ * Automatically handles auth errors and returns appropriate responses
+ */
+export function withAuth(handler: AuthenticatedHandler) {
+    return async (request: NextRequest): Promise<Response> => {
+        try {
+            const user = await requireAuth(request);
 
-    if (user.role !== "admin") {
-        throw new Error("Admin access required. Insufficient permissions.");
-    }
+            return await handler(request, user);
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error: any) {
+            const statusCode = error?.code === "AUTH_REQUIRED" ? 401 : 500;
 
-    return user;
+            return Response.json(
+                {
+                    error: error?.message || "Authentication error",
+                    code: error?.code || "UNKNOWN_ERROR"
+                },
+                { status: statusCode }
+            );
+        }
+    };
 }
 
-export async function revokeRefreshToken(userId: string): Promise<void> {
-    if (!userId) {
-        throw new Error("Invalid user ID provided for token revocation");
-    }
+/**
+ * Wraps an API route handler with admin authentication
+ * Automatically handles auth errors and returns appropriate responses
+ */
+export function withAdmin(handler: AdminHandler) {
+    return async (request: NextRequest): Promise<Response> => {
+        try {
+            const user = await requireAuth(request);
 
-    try {
-        await connectDB();
-        await User.findByIdAndUpdate(userId, {
-            refreshToken: null,
-            refreshTokenExpiresAt: null
-        });
+            if (user.role !== "admin") {
+                throw new Error("Admin access required. Insufficient permissions.");
+            }
 
-        console.log(`Refresh token revoked for user: ${userId}`);
-    } catch (error) {
-        throw new Error("Failed to revoke refresh token due to database error");
-    }
+            return await handler(request, user);
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error: any) {
+            let statusCode = 500;
+
+            if (error?.code === "AUTH_REQUIRED") {
+                statusCode = 401;
+            } else if (error?.code === "ADMIN_REQUIRED") {
+                statusCode = 403;
+            }
+
+            return Response.json(
+                {
+                    error: error?.message || "Authentication error",
+                    code: error?.code || "UNKNOWN_ERROR"
+                },
+                { status: statusCode }
+            );
+        }
+    };
 }

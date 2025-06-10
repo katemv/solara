@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 import { IUser } from "@/models/User";
-import { withAuth } from "@/lib/auth/utils/withAuth";
+import { withAuth } from "@/lib/auth/auth-server";
 
 export const GET = withAuth(async (_: NextRequest, user: IUser) => {
     return Response.json({

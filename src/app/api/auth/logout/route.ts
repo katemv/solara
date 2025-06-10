@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { requireAuth, revokeRefreshToken } from "@/lib/auth/auth-server";
+import { revokeRefreshToken } from "@/lib/auth/auth-server";
+import { withAuth } from "@/lib/auth/auth-server";
 
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (_: NextRequest, user) => {
     try {
-        const user = await requireAuth(request);
-
         await revokeRefreshToken(user._id?.toString() || "");
 
         return NextResponse.json({
@@ -17,4 +16,4 @@ export async function POST(request: NextRequest) {
             message: "Logout successful"
         });
     }
-}
+});

@@ -1,9 +1,9 @@
 import { NextRequest } from "next/server";
 
-import { withAdmin } from "@/lib/auth/utils/withAuth";
 import { IUser } from "@/models/User";
 import User from "@/models/User";
 import connectDB from "@/lib/db";
+import { withAdmin } from "@/lib/auth/auth-server";
 
 export const GET = withAdmin(async (_: NextRequest, user: IUser) => {
     try {
